@@ -1,0 +1,13 @@
+@use "../styles/globalstyles.scss" as *;
+
+@mixin Layout {
+    height: calc(90vh - 123px);
+    border-left: 1px solid $border-color;
+    border-right: 1px solid $border-color;
+}
+
+@mixin CenterLayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

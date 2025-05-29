@@ -1,0 +1,47 @@
+@use "@styles/globalstyles.scss" as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid $border-color;
+  overflow: hidden;
+  &__left {
+    display: flex;
+    &__title {
+      padding-right: 100px;
+      padding-top: $padding-xxl;
+      padding-bottom: $padding-xxl;
+      padding-left: $padding-6xl;
+    }
+    &__about {
+      padding: $padding-button-default;
+    }
+    &__projects {
+      padding: $padding-button-default;
+    }
+  }
+
+  &__contact {
+    border-left: 1px solid $border-color;
+    padding: $padding-button-default;
+    border-right: none !important;
+  }
+}
+
+.items {
+  @include border-styles-nav;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+
+  cursor: default;
+  text-decoration: none;
+  color: inherit;
+}
+
+.active {
+  border-bottom: 3px solid #fd8300;
+}

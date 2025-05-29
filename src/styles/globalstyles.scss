@@ -1,0 +1,57 @@
+$padding-default: 10px;
+$padding-s: 5px;
+$padding-m: 10px;
+$padding-l: 12px;
+$padding-xl: 14px;
+$padding-xxl: 16px;
+$padding-xxxl: 20px;
+$padding-4xl: 24px;
+$padding-5xl: 28px;
+$padding-6xl: 32px;
+
+$padding-button-default: 16px 32px;
+
+//border
+$border-color: #314158;
+$border-radius-default: 8px;
+
+$border-styles: 1px solid $border-color;
+
+//color
+$subtitle-color: #90a1b9;
+$title-color: #f8fafc;
+$secondary-title-color: #615fff;
+$full-color: #00d5be;
+$function-color: #00c950;
+$link-color: #ffa1ad;
+
+//mixin
+@mixin border-styles-nav {
+    border-right: 1px solid $border-color;
+}
+
+@mixin font-size-default {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+@mixin subtitle {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $subtitle-color;
+}
+
+@mixin title {
+    font-size: 60px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: $title-color;
+}
+@mixin secondaryTitle {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $secondary-title-color;
+}

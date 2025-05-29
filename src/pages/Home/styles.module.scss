@@ -1,0 +1,154 @@
+@use "../index.styles.scss" as *;
+@use "../../styles/globalstyles.scss" as *;
+
+.home {
+    @include Layout;
+    @include CenterLayout;
+
+    // Mobile responsive padding
+    @media (max-width: 768px) {
+        padding: 0 16px;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 75px;
+        max-width: 100%;
+
+        // Mobile responsive adjustments
+        @media (max-width: 768px) {
+            gap: 40px;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 480px) {
+            gap: 30px;
+            padding: 16px 0;
+        }
+
+        &__head {
+            text-align: left;
+
+            // Mobile responsive text alignment
+            @media (max-width: 768px) {
+                text-align: center;
+            }
+
+            &__subtitle {
+                @include subtitle;
+
+                @media (max-width: 768px) {
+                    font-size: clamp(14px, 3vw, 18px);
+                }
+            }
+
+            &__title {
+                @include title;
+
+                @media (max-width: 768px) {
+                    font-size: clamp(24px, 6vw, 48px);
+                    line-height: 1.2;
+                    margin: 8px 0;
+                }
+
+                @media (max-width: 480px) {
+                    font-size: clamp(20px, 8vw, 32px);
+                }
+            }
+
+            &__secondaryTitle {
+                @include secondaryTitle;
+
+                @media (max-width: 768px) {
+                    font-size: clamp(16px, 4vw, 24px);
+                    margin-top: 8px;
+                }
+
+                @media (max-width: 480px) {
+                    font-size: clamp(14px, 5vw, 20px);
+                }
+            }
+        }
+
+        &__bot {
+            text-align: left;
+
+            @media (max-width: 768px) {
+                text-align: center;
+            }
+
+            &__description {
+                @include subtitle;
+
+                @media (max-width: 768px) {
+                    font-size: clamp(12px, 3vw, 16px);
+                    margin-bottom: 8px;
+                }
+
+                @media (max-width: 480px) {
+                    font-size: clamp(11px, 3.5vw, 14px);
+                }
+            }
+
+            &__github {
+                display: flex;
+                gap: 20px;
+                flex-wrap: wrap;
+
+                @media (max-width: 768px) {
+                    gap: 12px;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                @media (max-width: 480px) {
+                    gap: 8px;
+                    flex-direction: column;
+                    align-items: center;
+
+                    // Stack elements vertically on very small screens
+                    &__const,
+                    &__function,
+                    &__link {
+                        margin: 2px 0;
+                    }
+                }
+
+                &__const {
+                    @include subtitle;
+                    color: $secondary-title-color;
+
+                    @media (max-width: 768px) {
+                        font-size: clamp(12px, 3vw, 16px);
+                    }
+                }
+
+                &__function {
+                    @include subtitle;
+                    color: $function-color;
+
+                    @media (max-width: 768px) {
+                        font-size: clamp(12px, 3vw, 16px);
+                    }
+                }
+
+                &__link {
+                    @include subtitle;
+                    color: $link-color;
+                    word-break: break-all;
+
+                    @media (max-width: 768px) {
+                        font-size: clamp(12px, 3vw, 16px);
+                        max-width: 100%;
+                    }
+
+                    @media (max-width: 480px) {
+                        font-size: clamp(10px, 3vw, 14px);
+                        word-break: break-word;
+                    }
+                }
+            }
+        }
+    }
+}

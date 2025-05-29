@@ -1,0 +1,38 @@
+@use "../../styles/globalstyles.scss" as *;
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+
+    border-top: 1px solid $border-color;
+
+    overflow: hidden;
+
+    &__left {
+        display: flex;
+        @include font-size-default;
+
+        &__title {
+        }
+    }
+
+    &__right {
+        &__github {
+            border-left: 1px solid $border-color;
+        }
+    }
+}
+
+.item {
+    @include border-styles-nav;
+    padding: $padding-button-default;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
