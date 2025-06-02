@@ -1,0 +1,87 @@
+.typingContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  text-align: center;
+  position: relative;
+  font-size: inherit;
+
+  /* CSS animation cho performance tốt hơn */
+  animation: blink 1s infinite;
+
+  /* Optimize rendering */
+  will-change: opacity;
+
+  &::before {
+    content: "|";
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Alternative: Sử dụng border thay vì content */
+.cursorBorder {
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  border-right: 2px solid currentColor;
+  margin-left: 2px;
+
+  /* Performance optimizations */
+  will-change: opacity;
+  contain: strict;
+
+  animation: blink 1s infinite;
+
+  /* Không có content nên không tính vào LCP */
+  font-size: 0;
+  line-height: 0;
+}
+
+.cursorPseudo {
+  /* Pseudo-element không được tính vào LCP */
+  &::after {
+    content: "|";
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+
+    /* Critical: Prevent LCP calculation */
+    font-size: inherit;
+    will-change: opacity;
+    contain: strict;
+    content-visibility: auto;
+  }
+
+  &.hidden::after {
+    display: none;
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+}

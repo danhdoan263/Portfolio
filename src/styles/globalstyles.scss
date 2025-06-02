@@ -1,3 +1,11 @@
+//default height
+$padding-screen-h: 40px;
+$header-h: 57px;
+$footer-h: 66px;
+$layout-h: calc(90vh - $header-h - $footer-h); //for content layout
+
+//
+
 $padding-default: 10px;
 $padding-s: 5px;
 $padding-m: 10px;
@@ -10,6 +18,9 @@ $padding-5xl: 28px;
 $padding-6xl: 32px;
 
 $padding-button-default: 16px 32px;
+
+//padding-tab
+$padding-tab-default: 16px 20px;
 
 //border
 $border-color: #314158;

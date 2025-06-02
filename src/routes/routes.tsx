@@ -1,17 +1,18 @@
+import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
-import HomePage from "../pages/Home/Home";
 import MainLayout from "@/Layout/MainLayout";
+const About = lazy(() => import("@/pages/About/About"));
 
 //Route Element
 export default function RoutesElement() {
   const routeElements = useRoutes([
     {
-      path: "/",
+      path: "/Portfolio",
       element: <MainLayout />,
       children: [
         {
-          path: "/",
-          element: <HomePage />,
+          path: "about",
+          element: <About />,
         },
       ],
     },

@@ -4,6 +4,7 @@
 .home {
     @include Layout;
     @include CenterLayout;
+    position: relative;
 
     // Mobile responsive padding
     @media (max-width: 768px) {
@@ -11,6 +12,8 @@
     }
 
     &__body {
+        z-index: 2;
+        background: transparent;
         display: flex;
         flex-direction: column;
         gap: 75px;
@@ -45,6 +48,7 @@
 
             &__title {
                 @include title;
+                contain: layout style paint;
 
                 @media (max-width: 768px) {
                     font-size: clamp(24px, 6vw, 48px);
@@ -150,5 +154,48 @@
                 }
             }
         }
+    }
+    &__linear {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        z-index: 1;
+        background: linear-gradient(to right, #00d5c0, #1cb057);
+        filter: blur(100px);
+
+        animation:
+            rotate 5s infinite,
+            light 4s ease-in-out infinite;
+        transition: all 2s ease-in-out;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(90deg);
+    }
+    50% {
+        transform: rotate(180deg);
+    }
+    75% {
+        transform: rotate(270deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes light {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 0.3;
     }
 }

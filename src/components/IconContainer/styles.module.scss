@@ -1,0 +1,30 @@
+@use "../../styles/globalstyles.scss" as *;
+.iconContainer {
+    user-select: none;
+
+    &__title {
+        cursor: pointer;
+        border-bottom: 1px solid $border-color;
+        padding: $padding-tab-default;
+    }
+
+    &__list {
+        visibility: hidden;
+
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        padding: 5px 40px;
+
+        list-style-type: none;
+
+        li {
+            border-bottom: 1px solid $border-color;
+        }
+    }
+}
+
+.active {
+    visibility: visible;
+}

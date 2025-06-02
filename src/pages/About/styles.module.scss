@@ -1,0 +1,15 @@
+@use "../../styles/globalstyles.scss" as *;
+$about-left-w: 261px;
+
+.about {
+    display: flex;
+    height: $layout-h;
+
+    &__left {
+        width: $about-left-w;
+    }
+    &__right {
+        width: calc(100% - $about-left-w);
+        background-color: $border-color;
+    }
+}

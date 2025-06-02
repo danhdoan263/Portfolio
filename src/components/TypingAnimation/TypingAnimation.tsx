@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styles from "./TypingAnimation.module.scss";
 
 interface TypingAnimationProps {
   text: string;
@@ -19,7 +20,6 @@ const TypingAnimation: React.FC<TypingAnimationProps> = ({
 }) => {
   const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
@@ -39,33 +39,15 @@ const TypingAnimation: React.FC<TypingAnimationProps> = ({
     return () => clearTimeout(timer);
   }, [currentIndex, text, speed, delay, onComplete]);
 
-  // Cursor blinking effect
-  useEffect(() => {
-    if (hideCursorWhenComplete && isComplete) {
-      setShowCursor(false);
-      return;
-    }
-
-    const cursorTimer = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 500);
-
-    return () => clearInterval(cursorTimer);
-  }, [hideCursorWhenComplete, isComplete]);
-
   return (
     <span className={className}>
       {displayedText}
-      {(!hideCursorWhenComplete || !isComplete) && (
-        <span
-          style={{
-            opacity: showCursor ? 1 : 0,
-            transition: "opacity 0.1s ease-in-out",
-          }}
-        >
-          |
-        </span>
-      )}
+      <span
+        className={`${styles.cursor} ${
+          hideCursorWhenComplete && isComplete ? styles.hidden : ""
+        }`}
+        aria-hidden="true"
+      />
     </span>
   );
 };

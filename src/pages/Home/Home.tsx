@@ -1,8 +1,9 @@
+import Icon from "@/icomoon/Icon";
 import styles from "./styles.module.scss";
 import TypingAnimation from "@components/TypingAnimation/TypingAnimation";
-import { useState } from "react";
+import { memo, useState } from "react";
 
-const HomePage = () => {
+const HomePage = memo(() => {
   const [showSubtitle, setShowSubtitle] = useState(false);
   const [showTitle, setShowTitle] = useState(false);
   const [showSecondaryTitle, setShowSecondaryTitle] = useState(false);
@@ -29,8 +30,8 @@ const HomePage = () => {
             <div className={styles.home__body__head__title}>
               <TypingAnimation
                 text="Danh Doan"
-                speed={120}
-                delay={300}
+                speed={80}
+                delay={500}
                 onComplete={() => setShowTitle(true)}
                 hideCursorWhenComplete={true}
               />
@@ -38,8 +39,9 @@ const HomePage = () => {
           )}
           {showTitle && (
             <div className={styles.home__body__head__secondaryTitle}>
+              <Icon icon="arrow-right-bold" size={25} />
               <TypingAnimation
-                text="Front-end developer"
+                text=" Front-end developer"
                 speed={90}
                 delay={400}
                 onComplete={() => setShowSecondaryTitle(true)}
@@ -84,7 +86,7 @@ const HomePage = () => {
                 {showGithubConst && (
                   <div className={styles.home__body__bot__github__function}>
                     <TypingAnimation
-                      text="githubLink"
+                      text="github"
                       speed={80}
                       delay={200}
                       onComplete={() => setShowGithubFunction(true)}
@@ -115,8 +117,9 @@ const HomePage = () => {
           </div>
         )}
       </div>
+      <div className={styles.home__linear}></div>
     </div>
   );
-};
+});
 
 export default HomePage;
