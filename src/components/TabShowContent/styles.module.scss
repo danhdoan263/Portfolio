@@ -1,4 +1,14 @@
 .tabShowContent {
     &__header {
+        display: flex;
+        gap: 5px;
+    }
+    &__content {
+        &__item {
+            display: none;
+            &.active {
+                display: block;
+            }
+        }
     }
 }

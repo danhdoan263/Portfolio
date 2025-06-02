@@ -33,7 +33,7 @@ export const HeaderIndex = React.memo(() => {
   const location = useLocation();
 
   const [activeItem, setActiveItem] = useState(
-    location.pathname.split("/")[2] || "title"
+    location.pathname.split("/")[2] || "/Portfolio"
   );
 
   const handleClick = useCallback((id: string) => {
