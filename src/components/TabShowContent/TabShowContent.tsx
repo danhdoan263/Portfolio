@@ -7,29 +7,70 @@ type TabShowContentProps = {
   dataShow: DataMockup | null;
 };
 
+// Tạo unique key cho mỗi tab để tránh conflict
+const createTabKey = (item: DataMockup): string => {
+  return `${item.id}-${item.title}-${(item.content || '').substring(0, 10)}`;
+};
+
 const TabShowContent = ({ dataShow }: TabShowContentProps) => {
   const [dataContent, setDataContent] = useState<DataMockup[]>([]);
   const [dataShowContent, setDataShowContent] = useState<string>("");
+  const [activeTabKey, setActiveTabKey] = useState<string | null>(null);
 
   // Memoized handlers for performance
   const handleAddTab = useCallback((newData: DataMockup) => {
+    const newTabKey = createTabKey(newData);
+    
     setDataContent((prev) => {
+      // Check duplicate dựa trên unique key
       const exists = prev.some(
-        (existingItem) => existingItem.content === newData.content
+        (existingItem) => createTabKey(existingItem) === newTabKey
       );
-      return exists ? prev : [...prev, newData];
+      
+      if (exists) {
+        // Nếu tab đã tồn tại, chỉ cần active nó
+        setActiveTabKey(newTabKey);
+        setDataShowContent(newData.content || "");
+        return prev;
+      }
+      
+      // Thêm tab mới và active nó
+      setActiveTabKey(newTabKey);
+      setDataShowContent(newData.content || "");
+      return [...prev, newData];
     });
   }, []);
 
-  const handleRemoveTab = useCallback((targetId: number) => {
+  const handleRemoveTab = useCallback((targetItem: DataMockup) => {
+    const targetKey = createTabKey(targetItem);
+    
     setDataContent((prev) => {
-      const currentIndex = prev.findIndex((p) => p.id === targetId);
-      return prev.filter((_, index) => index !== currentIndex);
+      // Filter theo unique key
+      const newContent = prev.filter((item) => createTabKey(item) !== targetKey);
+      
+      // Nếu tab đang active bị remove
+      if (activeTabKey === targetKey) {
+        if (newContent.length > 0) {
+          // Chuyển sang tab đầu tiên còn lại
+          const firstTab = newContent[0];
+          const firstTabKey = createTabKey(firstTab);
+          setActiveTabKey(firstTabKey);
+          setDataShowContent(firstTab.content || "");
+        } else {
+          // Không còn tab nào, clear tất cả
+          setActiveTabKey(null);
+          setDataShowContent("");
+        }
+      }
+      
+      return newContent;
     });
-  }, []);
+  }, [activeTabKey]);
 
-  const handleTabClick = useCallback((content: string | undefined) => {
-    setDataShowContent(content || "");
+  const handleTabClick = useCallback((item: DataMockup) => {
+    const tabKey = createTabKey(item);
+    setActiveTabKey(tabKey);
+    setDataShowContent(item.content || "");
   }, []);
 
   // Effect for adding new data
@@ -39,27 +80,22 @@ const TabShowContent = ({ dataShow }: TabShowContentProps) => {
     }
   }, [dataShow, handleAddTab]);
 
-  // Effect for setting default content
-  useEffect(() => {
-    if (dataContent.length > 0) {
-      setDataShowContent(dataContent[0].content || "");
-    } else {
-      setDataShowContent("");
-    }
-  }, [dataContent]);
-
   // Memoized tab components
   const tabComponents = useMemo(
     () =>
-      dataContent.map((item) => (
-        <Tab
-          title={item.title}
-          key={item.id} // Use unique ID instead of index
-          onClose={() => handleRemoveTab(item.id)}
-          onClick={() => handleTabClick(item.content)}
-        />
-      )),
-    [dataContent, handleRemoveTab, handleTabClick]
+      dataContent.map((item) => {
+        const tabKey = createTabKey(item);
+        return (
+          <Tab
+            title={item.title}
+            key={tabKey}
+            onClose={() => handleRemoveTab(item)}
+            onClick={() => handleTabClick(item)}
+            active={tabKey === activeTabKey}
+          />
+        );
+      }),
+    [dataContent, handleRemoveTab, handleTabClick, activeTabKey]
   );
 
   // Memoized content display
@@ -72,7 +108,7 @@ const TabShowContent = ({ dataShow }: TabShowContentProps) => {
     <div className={styles.tabShowContent}>
       <div className={styles.tabShowContent__header}>{tabComponents}</div>
       <div className={styles.tabShowContent__content}>
-        <div>{contentDisplay}</div>
+        <p>{contentDisplay}</p>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import type { DataMockup } from "@/mock/Data";
 
 export type IconContainerProps = {
-  setDataShow: (dataShow: DataMockup) => void;
+  data: DataMockup;
+  setDataShow?: (data: DataMockup) => void;
 };

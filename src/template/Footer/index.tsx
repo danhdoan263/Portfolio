@@ -33,7 +33,7 @@ const Footer = () => {
         className={`${styles.footer__right__github} ${styles.item}`}
         onClick={() => handleNavigate("https://github.com/danhdoan263")}
       >
-        _danhdoan263
+        @danhdoan263
         <Icon icon="github" size={32} />
       </div>
     </div>

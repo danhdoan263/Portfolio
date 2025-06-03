@@ -6,16 +6,21 @@ type TabProps = {
   title: string;
   onClick: () => void;
   onClose: () => void;
+  active?: boolean;
 };
 
-const Tab = React.memo(({ title, onClick, onClose }: TabProps) => {
+const Tab = React.memo(({ title, onClick, onClose, active }: TabProps) => {
   const handleCloseClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent tab click when closing
+    e.stopPropagation();
     onClose();
   };
 
   return (
-    <div className={styles.tab} onClick={onClick}>
+    <div
+      className={styles.tab}
+      onClick={onClick}
+      style={active ? { borderBottom: "2px solid red" } : {}}
+    >
       {title}{" "}
       <div className={styles.tab__close} onClick={handleCloseClick}>
         <Icon icon="close" size={20} color="red" />

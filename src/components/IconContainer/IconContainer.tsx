@@ -1,108 +1,98 @@
+/**
+ * 1. render tab collection
+ * 2. render tab folder
+ * 3. render tab file
+ * 4. render tab single
+ */
+
+import Icon from "@/icomoon/Icon";
 import type { IconNames } from "@/icomoon/Icon";
-import IconText from "../IconText/IconText";
-import styles from "./styles.module.scss";
-import { data, type DataMockup } from "@/mock/Data";
-import { useState } from "react";
 import type { IconContainerProps } from "../type";
+import styles from './styles.module.scss'
+import { useState } from "react";
+import type { DataMockup } from "@/mock/Data";
+import IconText from "../IconText/IconText";
 
-const IconContainer = ({ setDataShow }: IconContainerProps) => {
-  const [active, setActive] = useState(false);
-  const [dataShowChildId, setDataShowChildId] = useState<number | null>(null);
-  const dataItem = data;
-  const handleDataShow = (data: DataMockup) => {
-    setDataShowChildId(data.id);
+// Component đệ quy để render từng item trong tree
+const TreeItem = ({ item, level = 0, setDataShow }: { 
+  item: DataMockup; 
+  level?: number; 
+  setDataShow?: (data: DataMockup) => void;
+}) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const hasChildren = item.data && item.data.length > 0;
+  const isFile = item.content && !hasChildren;
+
+  const handleToggle = () => {
+    if (hasChildren) {
+      setIsExpanded(!isExpanded);
+    } else if (isFile && setDataShow) {
+      // Nếu là file, hiển thị content
+      setDataShow(item);
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const renderList = (item: any) => {
-    return (
-      <li
-        key={item.id}
-        onClick={() => {
-          handleDataShow(item);
-        }}
-      >
-        <IconText
-          icon={item.icon as IconNames}
-          text={item.title}
-          icolor={item.color}
-          onClick={() => {}}
-        />
-        {dataShowChildId === item.id && (
-          <ul
-            style={{
-              listStyleType: "none",
-            }}
-          >
-            {item.data?.map((item: DataMockup) => {
-              return (
-                <li
-                  key={item.id}
-                  style={{ borderBottom: "1px solid rgb(110, 79, 58)" }}
-                >
-                  <IconText
-                    icon={item.icon as IconNames}
-                    text={item.title}
-                    icolor={item.color}
-                    style={{
-                      padding: "5px 16px",
-                      borderLeft: "1px solid rgb(110, 79, 58)",
-                    }}
-                    onClick={() => {
-                      setDataShow(item);
-                    }}
-                  />
-                </li>
-              );
-            })}
-          </ul>
+  return (
+    <div className={styles.treeItem} style={{ marginLeft: `${level * 20}px` }}>
+      {/* Render item hiện tại */}
+      <div className={styles.treeItemContent} onClick={handleToggle}>
+        {hasChildren && (
+          <Icon 
+            icon={isExpanded ? "arrow-down-bold" : "arrow-right-bold"} 
+            size={10} 
+          />
         )}
-      </li>
-    );
-  };
-
-  const renderListSingle = (item: DataMockup) => {
-    return (
-      <li
-        key={item.id}
-        onClick={() => {
-          setDataShow(item);
-        }}
-      >
-        <IconText
-          icon={item.icon as IconNames}
-          text={item.title}
-          icolor={item.color}
+        <IconText 
+          text={item.title} 
+          icon={item.icon as IconNames} 
+          icolor={item.color} 
         />
-      </li>
-    );
-  };
+      </div>
+
+      {/* Render các item con nếu có và đang được expand */}
+      {hasChildren && isExpanded && (
+        <div className={styles.treeChildren}>
+          {item.data?.map((childItem) => (
+            <TreeItem 
+              key={childItem.id} 
+              item={childItem} 
+              level={level + 1}
+              setDataShow={setDataShow}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const IconContainer = ({ data, setDataShow }: IconContainerProps) => {
+  const [active, setActive] = useState(false);
+
   const handleClick = () => {
-    const list = document.querySelector(`.${styles.iconContainer__list}`);
     setActive(!active);
-    list?.classList.toggle(styles.active);
   };
 
   return (
     <div className={styles.iconContainer}>
-      <div className={styles.iconContainer__title} onClick={handleClick}>
-        <IconText
-          icon={active ? "arrow-down-bold" : "arrow-right-bold"}
-          text="Personal Info"
-        />
+      <div className={styles.iconContainer__collection} onClick={handleClick}>
+        <Icon icon={active ? "arrow-down-bold" : "arrow-right-bold"} size={16} />
+        <div className={styles.iconContainer__title}>{data.title}</div>
       </div>
-      <ul className={styles.iconContainer__list}>
-        {dataItem
-          .filter((item) => item.data)
-          .map((item) => {
-            return renderList(item);
-          })}
-        {dataItem
-          .filter((item) => !item.data)
-          .map((item) => {
-            return renderListSingle(item);
-          })}
-      </ul>
+
+      {/* Render toàn bộ cây đệ quy */}
+      {active && data.data && (
+        <div style={{ paddingLeft: '10px' }}>
+          {data.data.map((item) => (
+            <TreeItem 
+              key={item.id} 
+              item={item} 
+              level={0}
+              setDataShow={setDataShow}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,30 +1,46 @@
 @use "../../styles/globalstyles.scss" as *;
+
 .iconContainer {
     user-select: none;
 
-    &__title {
+    &__collection {
+        display: flex;
+        align-items: center;
+        gap: 10px;
         cursor: pointer;
-        border-bottom: 1px solid $border-color;
         padding: $padding-tab-default;
+        border-bottom: 1px solid $border-color;
+        
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
     }
 
-    &__list {
-        visibility: hidden;
-
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-
-        padding: 5px 40px;
-
-        list-style-type: none;
-
-        li {
-            border-bottom: 1px solid $border-color;
-        }
+    &__title {
+        flex: 1;
     }
 }
 
-.active {
-    visibility: visible;
+// Styles cho tree structure
+.treeItem {
+    border-bottom: 1px solid rgba($border-color, 0.3);
+    
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+.treeItemContent {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 5px;
+
+    font-size: 12px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.treeChildren {
+    border-left: 1px solid rgba($border-color, 0.5);
 }

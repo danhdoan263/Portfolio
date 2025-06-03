@@ -2,11 +2,11 @@
 .tab {
     position: relative;
     padding: 16px 30px 16px 20px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 2px solid $border-color;
     border-left: 1px solid $border-color;
     &__close {
         position: absolute;
-        right: 0;
+        right: 5px;
         top: 50%;
         transform: translateY(-50%);
     }

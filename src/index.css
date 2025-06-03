@@ -1,6 +1,10 @@
 *{
     padding: 0;
     margin: 0;
-    background-color: transparent;
     text-wrap: nowrap;
+
+}
+
+body{
+    background: black;
 }
