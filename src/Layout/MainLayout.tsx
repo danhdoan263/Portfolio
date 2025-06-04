@@ -14,7 +14,7 @@ const MainLayout = memo(() => {
       <HeaderIndex />
       <div
         style={{
-          display: `${pathRoute === "/Portfolio" ? "block" : "none"}`,
+          display: `${pathRoute === "/" ? "block" : "none"}`,
         }}
       >
         <HomePage />

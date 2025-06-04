@@ -4,6 +4,8 @@
     padding: 16px 30px 16px 20px;
     border-bottom: 2px solid $border-color;
     border-left: 1px solid $border-color;
+    text-wrap: nowrap;
+
     &__close {
         position: absolute;
         right: 5px;

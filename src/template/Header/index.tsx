@@ -7,7 +7,7 @@ const menuItems = [
     id: "title",
     text: "_danhdoan-263",
     className: styles.header__left__title,
-    to: "/Portfolio",
+    to: "/",
   },
   {
     id: "about",
@@ -33,7 +33,7 @@ export const HeaderIndex = React.memo(() => {
   const location = useLocation();
 
   const [activeItem, setActiveItem] = useState(
-    location.pathname.split("/")[2] || "/Portfolio"
+    location.pathname === "/" ? "title" : location.pathname.split("/")[1] || "title"
   );
 
   const handleClick = useCallback((id: string) => {

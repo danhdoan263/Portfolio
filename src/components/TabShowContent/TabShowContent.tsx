@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import styles from "./styles.module.scss";
 import type { DataMockup } from "@/mock/Data";
 import Tab from "../Tab/Tab";
-
+import { marked } from 'marked';
 type TabShowContentProps = {
   dataShow: DataMockup | null;
 };
@@ -100,7 +100,7 @@ const TabShowContent = ({ dataShow }: TabShowContentProps) => {
 
   // Memoized content display
   const contentDisplay = useMemo(
-    () => dataShowContent || "No content",
+    () => marked.parse(dataShowContent) || "No content",
     [dataShowContent]
   );
 
@@ -108,7 +108,7 @@ const TabShowContent = ({ dataShow }: TabShowContentProps) => {
     <div className={styles.tabShowContent}>
       <div className={styles.tabShowContent__header}>{tabComponents}</div>
       <div className={styles.tabShowContent__content}>
-        <p>{contentDisplay}</p>
+        <div dangerouslySetInnerHTML={{ __html: contentDisplay }} />
       </div>
     </div>
   );
