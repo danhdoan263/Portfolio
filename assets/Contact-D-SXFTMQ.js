@@ -1,0 +1,1 @@
+import{j as t}from"./index-CPG5sCKX.js";const n=()=>t.jsxs("div",{style:{padding:"20px",textAlign:"center"},children:[t.jsx("h1",{children:"Contact"}),t.jsx("p",{children:"Contact page is under development..."})]});export{n as default};

@@ -1,0 +1,1 @@
+import{j as e}from"./index-CPG5sCKX.js";const r=()=>e.jsxs("div",{style:{padding:"20px",textAlign:"center"},children:[e.jsx("h1",{children:"Projects"}),e.jsx("p",{children:"Projects page is under development..."})]});export{r as default};
